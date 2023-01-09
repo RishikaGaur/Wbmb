@@ -13,7 +13,28 @@ const Dashboard = () => {
           <button className='new'>Add</button>
         </div>
         <div className='second child'>
+          <table className='lst'>
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Branch
+                </th>
+              </tr>
+            </thead>
 
+            <tbody>
+              <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+            </tbody>
+            
+          </table>
         </div>
       </div>
     </>
