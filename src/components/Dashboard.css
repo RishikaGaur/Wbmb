@@ -1,0 +1,35 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: bisque;
+    height: 100%;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
+}
+.child{
+    background-color: rgb(138, 113, 161);
+    width: 95%;
+}
+
+.first{
+    height: 10vh;
+    margin-top: 7px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.second{
+    height: 75vh;
+}
+
+.heading{
+    color: aliceblue;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: underline;
+
+}
+
