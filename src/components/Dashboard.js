@@ -8,33 +8,15 @@ const Dashboard = () => {
       <div className='container'>
         <div className='first child'>
           <span className='heading'>
-            List
+            Log In
           </span>
           <button className='new'>Add</button>
         </div>
         <div className='second child'>
-          <table className='lst'>
-            <thead>
-              <tr>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Branch
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-              </tr>
-            </tbody>
-            
-          </table>
+          <form onSubmit={handleSubmit}>
+            <label>Email</label>
+            <input></input>
+          </form>
         </div>
       </div>
     </>
