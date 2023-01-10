@@ -49,7 +49,7 @@ app.post("/register",check("firstname").not().isEmpty(),check("lastname").not().
 app.post("/login",async(req,res)=>{
     try{
         const person=await User.findOne({username:req.body.username});
-        // console.log(person);
+        console.log(person);
         if(person){
             const correct=await bcrypt.compare(req.body.password,person.password);
             if(correct){
