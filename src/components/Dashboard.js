@@ -13,10 +13,10 @@ const Dashboard = () => {
           <button className='new'>Add</button>
         </div>
         <div className='second child'>
-          <form onSubmit={handleSubmit}>
+          {/* <form onSubmit={handleSubmit}>
             <label>Email</label>
             <input></input>
-          </form>
+          </form> */}
         </div>
       </div>
     </>
