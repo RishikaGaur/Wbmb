@@ -4,17 +4,19 @@ const app=express();
 const Client=require("./models/client")
 const bcrypt=require("bcrypt")
 const bodyparser=require("body-parser")
+const jwt=require("jsonwebtoken")
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 const cookieParser=require("cookie-parser");
 const {check, validationResult}= require("express-validator");
 app.use(cookieParser());
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb+srv://rishika:rishika123@cluster0.9jbk311.mongodb.net/test").then((success)=>{
-    console.log(success);
+mongoose.connect("mongodb+srv://rishika:rishika123@cluster0.9jbk311.mongodb.net/test").then(()=>{
+    console.log("connected to db");
 }).catch(err=>{
     console.log(err)
 })
+const salt=10;
 
 //api
 app.get("/",(req,res)=>{
@@ -30,22 +32,13 @@ app.post("/register",check("firstname").not().isEmpty(),check("lastname").not().
     try{
         bcrypt.hash(req.body.password,salt)
         .then((npass)=>{
-            const output=User.create({
+            const output=Client.create({
                 firstname:req.body.firstname,
                 lastname:req.body.lastname,
                 username:req.body.username,
                 password:npass,
             });
-            res.send(output);
-            let jwtSecretKey = process.env.JWT_SECRET_KEY;
-            let data = {
-                time: Date(),
-                userId: 12,
-            }
-  
-            const token = jwt.sign(data, jwtSecretKey);
-  
-            res.send(token);
+            console.log(output);
         }).catch((err)=>{
             console.log(err);
         })
@@ -54,27 +47,32 @@ app.post("/register",check("firstname").not().isEmpty(),check("lastname").not().
         console.log(err);
         res.status(500).send(err);
     }
+
+    let token;
+    try{
+        token=jwt.sign({username:req.body.username},"secretkeyoftoken",{expiresIn:"1h"});
+    }catch(err){
+        console.log(err);
+        res.status(500).send(err);
+    }
+    res.status(201).json({
+        status:"success",
+        data:{
+            username:req.body.username,
+            token:token
+        }
+    })
 }
 })
 
 app.post("/login",async(req,res)=>{
     try{
-        const person=await User.findOne({username:req.body.username});
+        const person=await Client.findOne({username:req.body.username});
         console.log(person);
         if(person){
             const correct=await bcrypt.compare(req.body.password,person.password);
             if(correct){
-
-                let tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
-                let jwtSecretKey = process.env.JWT_SECRET_KEY;
-                const token = req.header(tokenHeaderKey);
-  
-                const verified = jwt.verify(token, jwtSecretKey);
-                if(verified){
-                    return res.send("valid user");
-                }else{
-                    return res.status(401).send(error);
-                }
+                res.send("valid user")
                 
             }
             else{
@@ -90,8 +88,25 @@ app.post("/login",async(req,res)=>{
 
 })
 
+app.get("/access",(req,res)=>{
+    try{
+        const tokn=req.headers.authorization.split(' ')[1]; 
+
+        const payload=jwt.verify(tokn,"secretkeyoftoken")
+        if(payload){
+            res.send({
+                status:"success",
+                username:payload.username})
+        }else{
+            res.send("invalid token")
+        }
+
+    }catch(err){
+        res.status(500).send(err)
+    }
+})
 
 
-app.listen(3000, function(){
-    console.log("App is running on Port 3000");
+app.listen(4000, function(){
+    console.log("App is running on Port 4000");
 });
