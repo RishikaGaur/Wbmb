@@ -1,17 +1,19 @@
+const User=require("../models/user")
+const bcrypt=require("bcrypt")
+
+const salt=10;
+
 const method1=(req,res)=>{
     res.send("welcome");
 
 }
-const method2=(req,res)=>{
-    const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() })
-  }else{
-    console.log(req.body);
+
+const method2= async(req,res)=>{
     try{
-        bcrypt.hash(req.body.password,salt)
-        .then((npass)=>{
-            const output=User.create({
+        console.log(req.body)
+        await bcrypt.hash(req.body.password,salt)
+        .then(async(npass)=>{
+            const output=await User.create({
                 firstname:req.body.firstname,
                 lastname:req.body.lastname,
                 username:req.body.username,
@@ -26,7 +28,6 @@ const method2=(req,res)=>{
         console.log(err);
         res.status(500).send(err);
     }
-}
 }
 
 const method3=async(req,res)=>{

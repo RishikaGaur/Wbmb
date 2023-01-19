@@ -1,15 +1,15 @@
 const mongoose=require("mongoose");
 const express=require("express");
 const app=express();
-const control=require("./controller/usercontroller")
+const userControl=require("./controller/usercontroller")
+const studentControl=require("./controller/studentcontroller")
 
+const validateUser=require("./validator/userValidator")
 
-const User=require("./models/user")
-const bcrypt=require("bcrypt")
 const bodyparser=require("body-parser")
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
-const {check, validationResult}= require("express-validator");
+
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -23,29 +23,32 @@ mongoose.connect(db).then(()=>{
 }).catch(err=>{
     console.log(err)
 })
-const salt=10;
 
 
-app.get("/",control.method1)
+//signup and signin api
 
-app.post("/register",
-check("firstname").not().isEmpty(),
-check("lastname").not().isEmpty(),check('username').isEmail(),
-check('password').isLength({ min: 6 }).isAlphanumeric(),
-control.method2)
+app.get("/",userControl.method1)
 
-app.post("/login",control.method3)
+app.post("/register",validateUser,userControl.method2)
+
+app.post("/login",userControl.method3)
+
+//student api
+
+app.get("/student",studentControl.first)
+
+app.post("/student",studentControl.second)
+
+app.put("/student/:id",studentControl.third)
+
+app.delete("/student/:id",studentControl.fourth)
+
+app.get("/student/:id",studentControl.fifth)
+
 
 app.listen(3000, function(){
     console.log("App is running on Port 3000");
 });
-
-
-
-
-
-
-
 
 
 
