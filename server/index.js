@@ -1,23 +1,23 @@
 const mongoose=require("mongoose");
 const express=require("express");
 const app=express();
-const userControl=require("./controller/usercontroller")
-const studentControl=require("./controller/studentcontroller")
-
-const validateUser=require("./validator/userValidator")
-
+const userRouter=require("./routes/userroute")
+const stuRouter=require("./routes/studentroute")
+const jwtRouter=require("./routes/jwtroute")
 const bodyparser=require("body-parser")
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
-
+//config
 const dotenv = require("dotenv");
 dotenv.config();
+
+//connection to database
 
 mongoose.set("strictQuery", false);
 
 const db= process.env.MONGOLAB_URI;
-// console.log(db)
+
 mongoose.connect(db).then(()=>{
     console.log("connected to mongodb");
 }).catch(err=>{
@@ -27,24 +27,18 @@ mongoose.connect(db).then(()=>{
 
 //signup and signin api
 
-app.get("/",userControl.method1)
+app.use("/", userRouter)
 
-app.post("/register",validateUser,userControl.method2)
+//jwt sign and verify
 
-app.post("/login",userControl.method3)
+app.use("/token",jwtRouter)
+
 
 //student api
 
-app.get("/student",studentControl.first)
+app.use("/student",stuRouter)
 
-app.post("/student",studentControl.second)
-
-app.put("/student/:id",studentControl.third)
-
-app.delete("/student/:id",studentControl.fourth)
-
-app.get("/student/:id",studentControl.fifth)
-
+//server
 
 app.listen(3000, function(){
     console.log("App is running on Port 3000");
