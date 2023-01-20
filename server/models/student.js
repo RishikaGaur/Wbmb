@@ -17,6 +17,7 @@ const studentSchema=new schema({
     },
     starting_date: {
         type:Date,
+        //default:Date.now
         required:true
     }
 

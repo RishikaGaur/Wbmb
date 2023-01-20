@@ -16,6 +16,11 @@ const first=async(req,res)=>{
 
 const second=async(req,res)=>{
     try{
+
+        // can also do
+        // const temp=new Student(req.body)
+        // temp.save(callback fn)
+        
         console.log(req.body);
         const result=await Student.create({
             name:req.body.name,
