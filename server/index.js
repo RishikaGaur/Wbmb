@@ -46,22 +46,20 @@ app.use("/student",stuRouter)
 
 //email sender using nodemailer
 app.post("/send/email",async(req,res)=>{
-    const password=process.env.PASS
-    // console.log(password)
     let transport = nodemailer.createTransport({
         host:"smtp.gmail.com",
         service: "gmail",
         port:465,
         secure:true,
         auth: {
-          user: "gaurrishika156@gmail.com",
-          pass: password
+          user: "",
+          pass: ""
         }
     });
 
     message = {
-        from: "gaurrishika156@gmail.com",
-        to: "gaurrishika156@gmail.com",
+        from: "",
+        to: "",
         subject: "Testing Sending Emails",
         text: "Hello how are  you?"
         //html:"<h1>hello</h1>"
