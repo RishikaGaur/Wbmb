@@ -20,7 +20,7 @@ const second=async(req,res)=>{
         // can also do
         // const temp=new Student(req.body)
         // temp.save(callback fn)
-        
+        //insert or insert many
         console.log(req.body);
         const result=await Student.create({
             name:req.body.name,
@@ -39,6 +39,8 @@ const second=async(req,res)=>{
 
 const third=async(req,res)=>{
     try{
+        //findOne then Student.set(req.body) then save
+        //update({_id:id},$set{})
         await Student.findByIdAndUpdate(req.params.id,{
             $set:{
             name:req.body.name,
@@ -61,6 +63,7 @@ const third=async(req,res)=>{
 
 const fourth=async(req,res)=>{
     try{
+        //findOne then remove
         await Student.findByIdAndDelete(req.params.id)
         res.send("This record is deleted")
 
@@ -74,6 +77,7 @@ const fourth=async(req,res)=>{
 
 const fifth=async(req,res)=>{
     try{
+        //findOne({_id:req.params.id})
         const result=await Student.findById(req.params.id);
         res.send(result)
     }catch(err){
@@ -91,3 +95,7 @@ module.exports={
     fourth,
     fifth
 }
+
+
+//req.query.abc
+//url?abc=5
