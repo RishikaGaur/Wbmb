@@ -28,6 +28,7 @@ const second=async(req,res)=>{
             branch:req.body.branch,
             starting_date:req.body.start
         });
+        
         res.send(result)
     }catch(err){
         res.status(500).json({

@@ -5,6 +5,7 @@ const userRouter=require("./routes/userroute")
 const stuRouter=require("./routes/studentroute")
 const jwtRouter=require("./routes/jwtroute")
 const nodemailer=require("nodemailer")
+const imgRouter=require("./routes/imgroute")
 // const logger=require("morgan")
 // app.use(logger("dev"))
 
@@ -72,6 +73,13 @@ app.post("/send/email",async(req,res)=>{
         }
     })
 })
+
+
+//image uploader
+
+app.use("/image",imgRouter)
+
+
 
 //server
 // can also use 

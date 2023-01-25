@@ -26,6 +26,17 @@ const studentSchema=new schema({
 }
 )
 
+studentSchema.pre("save",(next)=>{
+    console.log("pre hook will execute as soon as create occurs even before api code")
+    next()
+})
+
+
+studentSchema.post("save",(doc,next)=>{
+    console.log("post hook will execute after api code runs and after pre hook ")
+    next()
+})
+
 module.exports = mongoose.model("student",studentSchema)
 
 
@@ -44,6 +55,41 @@ module.exports = mongoose.model("student",studentSchema)
 //     return v.length>5
 // },"error")
 
-// field:[Schema.Types.ObjectId],
+//---------------------------------------------------
+
+// field:[Schema.Types.ObjectId]
 // field:Schema.Types.mixed
-//errorHandler, okay package
+//virtual
+//pre save,post save
+//error handler,ok
+//methods,instance
+//storing file as binary
+
+//----------------------------------------------------
+
+// const userSchema = new mongoose.Schema({
+//     username: String,
+//     email: String
+// })
+  
+// const postSchema = new mongoose.Schema({
+//     title: String,
+//     postedBy: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: "User"
+//     }
+// })
+  
+// const User = mongoose.model('User', userSchema);
+// const Post = mongoose.model('Post', postSchema);
+  
+// Post.find().populate("postedBy")
+//     .then(p => console.log(p))
+//     .catch(error => console.log(error));
+
+// PersonSchema
+// .virtual('name.full')
+// .get(function () {
+//   return this.name.first + ' ' + this.name.last;
+// });
+
