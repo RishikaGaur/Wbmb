@@ -22,7 +22,7 @@ io.on("connection",(socket)=>{
     console.log("User connected -",socket.id);
 
     socket.on("sendMsg",(arg)=>{
-        socket.emit("receiveMsg",arg)
+        socket.broadcast.emit("receiveMsg",arg)
     })
 
 
