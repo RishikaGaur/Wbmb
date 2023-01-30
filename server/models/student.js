@@ -4,7 +4,7 @@ const schema=mongoose.Schema
 const studentSchema=new schema({
     name:{
         type:String,
-        required:true
+        required:[true,"This field is empty"]
     },
     roll_no:{
         type:String,
@@ -25,6 +25,11 @@ const studentSchema=new schema({
     collection:"student_info"
 }
 )
+
+
+studentSchema.path("starting_date").validate((v)=>{
+    return v<=Date.now()
+},"Enter a valid starting date")
 
 studentSchema.pre("save",(next)=>{
     console.log("pre hook will execute as soon as create occurs even before api code")
@@ -50,10 +55,6 @@ module.exports = mongoose.model("student",studentSchema)
 // const fn=(v)=>{
 //     return v.length>5
 // }
-
-// mongoose.Schema.path("name").validate((v)=>{
-//     return v.length>5
-// },"error")
 
 //---------------------------------------------------
 
@@ -92,4 +93,5 @@ module.exports = mongoose.model("student",studentSchema)
 // .get(function () {
 //   return this.name.first + ' ' + this.name.last;
 // });
-
+//--------------------------------------------------
+//aggregate: sort,project,match,limit,group,lookup,unwind,out,addfield,facet
