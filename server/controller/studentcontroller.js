@@ -1,3 +1,4 @@
+const { db } = require("../models/student");
 const Student=require("../models/student")
 
 //name,roll_no,branch,starting_date
@@ -89,12 +90,62 @@ const fifth=async(req,res)=>{
     }
 }
 
+
+const sixth=async(req,res)=>{
+    try{
+        const result= await Student.aggregate([{ $match:{ branch:"cse"}},
+        {$group:{ _id: '$name', count: { $sum: 1 } }}])
+
+        res.send(result)
+
+    }catch(err){
+        res.json({
+            status:"failure",
+            message:err
+        })
+    }
+}
+
+const seventh=async(req,res)=>{
+    //left outer join
+    try{
+        const result= await Student.aggregate([
+            {
+                $match:{
+                    branch:"cse"
+                }
+            },
+            {
+                $lookup:{
+                    form:"teacher",
+                    localField:"branch",
+                    foreignField:"teacher.department",
+                    as:"teacher_details"
+                }
+            }
+        ])
+
+        res.send({
+            status:"success",
+            result:result
+        })
+
+    }catch(err){
+        res.json({
+            status:"failure",
+            message:err
+        })
+    }
+}
+
 module.exports={
     first,
     second,
     third,
     fourth,
-    fifth
+    fifth,
+    sixth,
+    seventh
 }
 
 

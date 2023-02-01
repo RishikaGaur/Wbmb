@@ -21,13 +21,22 @@ io.on("connection",(socket)=>{
     //start
     console.log("User connected -",socket.id);
 
-    socket.on("sendMsg",(arg)=>{
-        socket.broadcast.emit("receiveMsg",arg)
+    socket.on("sendMsg",(arg,roomId)=>{
+        let others=socket.broadcast;
+        others=roomId ? others.to(roomId):others;
+        others.emit("receiveMsg",arg)
     })
 
+    socket.on("join-room",({roomId})=>{
+        console.log("joining room")
+        socket.join(roomId)
+    })
 
     //end
+    
     socket.on("disconnect",()=>{
+        console.log(socket.rooms);
+        socket.rooms.size === 0
         console.log("user disconnected -",socket.id)
     })
 })

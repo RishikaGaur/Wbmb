@@ -94,4 +94,6 @@ module.exports = mongoose.model("student",studentSchema)
 //   return this.name.first + ' ' + this.name.last;
 // });
 //--------------------------------------------------
-//aggregate: sort,project,match,limit,group,lookup,unwind,out,addfield,facet
+//aggregate: sort,project,match,limit,group,lookup,out,addfield,facet,unionWith
+
+
