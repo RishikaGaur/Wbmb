@@ -2,6 +2,7 @@ const { db } = require("../models/student");
 const Student=require("../models/student")
 
 //name,roll_no,branch,starting_date
+//name,roll,branch,start
 
 const first=async(req,res)=>{
     try{
@@ -117,18 +118,15 @@ const seventh=async(req,res)=>{
             },
             {
                 $lookup:{
-                    form:"teacher",
+                    from:"teacher",
                     localField:"branch",
-                    foreignField:"teacher.department",
+                    foreignField:"department",
                     as:"teacher_details"
                 }
             }
         ])
 
-        res.send({
-            status:"success",
-            result:result
-        })
+        res.send(result)
 
     }catch(err){
         res.json({

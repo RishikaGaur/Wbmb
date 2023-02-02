@@ -32,13 +32,13 @@ studentSchema.path("starting_date").validate((v)=>{
 },"Enter a valid starting date")
 
 studentSchema.pre("save",(next)=>{
-    console.log("pre hook will execute as soon as create occurs even before api code")
+    console.log("pre hook will execute as soon as create occurs")
     next()
 })
 
 
 studentSchema.post("save",(doc,next)=>{
-    console.log("post hook will execute after api code runs and after pre hook ")
+    console.log("post hook will execute after new document is added and also after pre hook ")
     next()
 })
 
@@ -88,12 +88,16 @@ module.exports = mongoose.model("student",studentSchema)
 //     .then(p => console.log(p))
 //     .catch(error => console.log(error));
 
+//-----------------------------------------------------
+
 // PersonSchema
 // .virtual('name.full')
 // .get(function () {
 //   return this.name.first + ' ' + this.name.last;
 // });
+
 //--------------------------------------------------
+
 //aggregate: sort,project,match,limit,group,lookup,out,addfield,facet,unionWith
 
 

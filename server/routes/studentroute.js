@@ -7,7 +7,7 @@ stuRouter.get("/",studentControl.first)
 
 stuRouter.post("/",studentControl.second)
 
-//have to put these routes above id one because cse and join were considered as :id
+//have to put these routes above id urls because cse and join were considered as :id
 stuRouter.get("/cse",studentControl.sixth)
 
 stuRouter.get("/join",studentControl.seventh)

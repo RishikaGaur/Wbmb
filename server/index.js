@@ -45,7 +45,7 @@ app.use("/token",jwtRouter)
 
 app.use("/student",stuRouter)
 
-//email sender using nodemailer
+//email sender using nodemailer- cannot clear the security barrier of gmail
 app.post("/send/email",async(req,res)=>{
     let transport = nodemailer.createTransport({
         host:"smtp.gmail.com",
@@ -75,14 +75,14 @@ app.post("/send/email",async(req,res)=>{
 })
 
 
-//image uploader
-
+//gallery - still in progress
+//multer
 app.use("/image",imgRouter)
 
 
 
 //server
-// can also use 
+
 // require("http").createServer(app).listen(3000)
 
 app.listen(3000, function(){
