@@ -43,6 +43,12 @@ const Home = () => {
   }
 
 
+  const handleKeyDown=(event)=>{
+    if(event.key ==="Enter"){
+      handleSubmit()
+    }
+  }
+
   return (
     <>
       <div className='container'>
@@ -55,7 +61,7 @@ const Home = () => {
           }
         </div>
         <div className='ip'>
-          <input className='msg' placeholder="Type your message" value={msg} onChange={(e)=>setMsg(e.target.value)}></input>
+          <input className='msg' placeholder="Type your message" value={msg} onChange={(e)=>setMsg(e.target.value)} onKeyDown={handleKeyDown}></input>
           <span className='send' onClick={handleSubmit}>Send</span>
         </div>
       </div>
