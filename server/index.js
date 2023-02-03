@@ -48,22 +48,26 @@ app.use("/student",stuRouter)
 //email sender using nodemailer- cannot clear the security barrier of gmail
 app.post("/send/email",async(req,res)=>{
     let transport = nodemailer.createTransport({
-        host:"smtp.gmail.com",
         service: "gmail",
-        port:465,
-        secure:true,
         auth: {
-          user: "",
-          pass: ""
+          user: process.env.ACC,
+          pass: process.env.PASS
         }
     });
 
-    message = {
-        from: "",
-        to: "",
+    let message = {
+        from: process.env.ACC,
+        to: process.env.ACC,
         subject: "Testing Sending Emails",
         text: "Hello how are  you?"
         //html:"<h1>hello</h1>"
+        // attachments:[
+        //     {
+        //         filename:"",
+        //         path:"",
+        //         cid:""
+        //     }
+        // ]
     }
     transport.sendMail(message, (err, info)=>{
         if (err) {
